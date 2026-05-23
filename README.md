@@ -14,6 +14,7 @@
 | Kubernetes Version | `1.33` |
 | Instance Type | `t3.micro` |
 | ArgoCD Namespace | `infra-tools` |
+| ArgoCD Chart Version | `9.5.13` |
 
 ## Структура проєкту
 
@@ -42,7 +43,7 @@ goit-devops-lesson-7/
 ├── eks/                 # Модуль EKS (terraform-aws-modules/eks/aws ~> 20.0)
 │   ├── main.tf          # 2 node groups, terraform_remote_state
 │   ├── variables.tf
-│   ├── outputs.tf       # cluster_name, cluster_endpoint, kubeconfig_command
+│   ├── outputs.tf       # cluster_name, cluster_endpoint, cluster_certificate_authority_data, cluster_oidc_issuer_url, kubeconfig_command
 │   ├── terraform.tf
 │   └── backend.tf
 ├── .gitmodules
