@@ -15,8 +15,6 @@ configs:
       p, role:admin, repositories, *, *, allow
       g, argocd-admins, role:admin
     scopes: "[groups]"
-  params:
-    server.insecure: "true"
 
 controller:
   replicas: 1
