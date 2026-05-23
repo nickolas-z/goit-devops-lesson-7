@@ -50,7 +50,7 @@ variable "private_subnet_ids" {
 variable "cpu_instance_type" {
   description = "Instance type for CPU node group"
   type        = string
-  default     = "t3.micro"
+  default     = "t3.small"
 }
 
 variable "gpu_instance_type" {
