@@ -69,20 +69,22 @@ goit-devops-lesson-7/
 
 VPC, EKS та ArgoCD розгортаються з кореневої директорії. VPC outputs передаються в EKS напряму через module outputs, а ArgoCD підключається до створеного EKS-кластера через Kubernetes/Helm providers.
 
-> При першому створенні кластера зробити двоетапний apply, оскільки Kubernetes/Helm provider потребує живий EKS API до старту планування.
+Оскільки `argocd/provider.tf` конфігурує Kubernetes/Helm providers з EKS outputs, при першому запуску Terraform не може ініціалізувати ці providers до того, як кластер стане доступним. Тому **перший deploy завжди двоетапний**:
 
 ```bash
 terraform init
-terraform plan
-terraform apply
-```
-
-Якщо кластер створюється вперше і Kubernetes/Helm provider ще не може підключитися під час першого планування, виконти спочатку інфраструктуру, а потім повний apply:
-
-```bash
+# Крок 1: підняти інфраструктуру (VPC + EKS)
 terraform apply -target=module.vpc -target=module.eks
+# Крок 2: повний apply (ArgoCD + решта)
 terraform apply
 ```
+
+> Для повторного apply (кластер вже існує) достатньо одного кроку:
+>
+> ```bash
+> terraform plan
+> terraform apply
+> ```
 
 ## Перевірка після terraform apply
 
@@ -153,7 +155,7 @@ git submodule update --init --recursive
 git submodule update --remote --merge goit-argo
 ```
 
-Після оновлення submodule pointer зафіксуй його в parent repo:
+Після оновлення submodule pointer потрібно зафіксувати його в parent repo:
 
 ```bash
 git add .gitmodules goit-argo
